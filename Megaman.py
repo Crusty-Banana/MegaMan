@@ -1,2 +1,2 @@
 import retro
-env = retro.make(game='Airstriker-Genesis')
+env = retro.make(game='MegaMan2-Nes')
