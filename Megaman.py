@@ -50,7 +50,7 @@ def find_contour(img):
 
     cv2.imshow('bruh1', img)
 
-    img = cv2.GaussianBlur(img,(9,9),cv2.BORDER_DEFAULT)
+    img = cv2.GaussianBlur(img,(11,11),cv2.BORDER_DEFAULT)
     # cv2.imshow('blurred', img)
     #convert img to grey
     img_grey = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
@@ -80,8 +80,11 @@ while not done:
     screen, reward, done, info = env.step(action)
     
     rgb = env.render('rgb_array')
-    find_contour(rgb)
-
+    contour = find_contour(rgb)
+    
+    contour = cv2.resize(contour, rgb.shape[:-1])
+    cv2.imshow('final', contour)
+    cv2.waitKey(0)
     print("Action", action)
-    print("image ", screen.shape, "reward ", reward, "Done?", done)
+    print("image ", contour.shape, "reward ", reward, "Done?", done)
     print("Info", info)

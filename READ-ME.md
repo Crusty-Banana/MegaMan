@@ -20,9 +20,25 @@ Todo:
 - Health: How much health Mega Man have left $[0, 24]$
 - Lives: How many death can Mega Man have before Game Over $[0, 3]$
 - Progress: How much progress have he make, or how far have he gone $[0, +\infty]$
-- The screen: pixels on the screen at the current time.
+- The screen: pixels on the screen at the current time (contour of the screen).
+- Position of character on the screen.
 
-<h2> III. Initial policy</h2>
+<h2> II. Action space</h2>
 
-move right and shoot
-   
+- Move left, right.
+- Climb up, down at ladder
+- shoot
+- jump (how high?)
+
+<h2> III. Reward</h2>
+
+progress
+
+<h2> IV. Initial policy </h2>
+
+- move right
+- shoot and jump periodically
+
+<h2> VIII. Exploration strategy </h2>
+
+
