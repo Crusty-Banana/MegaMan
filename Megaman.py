@@ -63,10 +63,11 @@ def find_contour(img):
     #create an empty image for contours
     img_contours = np.zeros(img.shape)
     # draw the contours on the empty image
-    cv2.drawContours(img_contours, contours, -1, (0,255,0), 3)
+    cv2.drawContours(img_contours, contours, -1, (0,255,0), thickness=cv2.FILLED)
     #save image
     cv2.imwrite('D:/contours.png', img_contours)
     cv2.imshow('bruh', img_contours)
+
     # cv2.waitKey(0)
     # cv2.destroyAllWindows()
     return img_contours
@@ -85,6 +86,8 @@ while not done:
     contour = cv2.resize(contour, rgb.shape[:-1])
     cv2.imshow('final', contour)
     cv2.waitKey(0)
+
+    # 14x15 grid
     print("Action", action)
     print("image ", contour.shape, "reward ", reward, "Done?", done)
     print("Info", info)

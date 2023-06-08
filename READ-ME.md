@@ -19,20 +19,23 @@ Todo:
 
 - Health: How much health Mega Man have left $[0, 24]$
 - Lives: How many death can Mega Man have before Game Over $[0, 3]$
-- Progress: How much progress have he make, or how far have he gone $[0, +\infty]$
-- The screen: pixels on the screen at the current time (contour of the screen).
+- Progress: How much progress have he make, his x coordinate on the map $[0, +\infty]$ and his y coordinate on the map.
 - Position of character on the screen.
 
 <h2> II. Action space</h2>
 
 - Move left, right.
-- Climb up, down at ladder
+<!-- - Climb up, down at ladder -->
 - shoot
 - jump (how high?)
 
 <h2> III. Reward</h2>
 
 progress
+enemy defeated
+learning rate:
+discounting factor:
+formula:
 
 <h2> IV. Initial policy </h2>
 
@@ -41,4 +44,9 @@ progress
 
 <h2> VIII. Exploration strategy </h2>
 
+Epsilon Greedy
+
+<h2> Data storage <h2> 
+
+Python matrix pickle
 
