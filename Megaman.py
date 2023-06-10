@@ -23,7 +23,7 @@ for i in range(number_of_episodes):
 
     for j in range(number_of_steps):
         if (j % 10 == 0):
-            env.render()
+            # env.render()
             action = agent.chooseAction(current_state)
 
         button_pressed = agent.get_button_pressed(action)

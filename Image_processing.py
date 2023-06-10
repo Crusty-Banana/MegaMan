@@ -17,8 +17,9 @@ last_y_pos = 0
 
 def find_megaman(img):
     rows, column = img.shape[:2]
-    tmp = repeat_upsample(img, 4, 4)
-    cv2.imshow("masked", tmp)
+    # tmp = repeat_upsample(img, 4, 4)
+    # cv2.imshow("masked", tmp)
+    # cv2.waitKey(0)
     global last_y_pos
     for y in range(rows - 3):
         for x in range(column - 2):
