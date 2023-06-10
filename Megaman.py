@@ -23,16 +23,17 @@ for i in range(number_of_episodes):
 
     for j in range(number_of_steps):
         if (j % 10 == 0):
-            # env.render()
+            print("still running", i, j)
+            env.render()
             action = agent.chooseAction(current_state)
 
         button_pressed = agent.get_button_pressed(action)
 
         screen, reward, done, next_state = get_current_state(env, button_pressed)
 
-        # if (j % 20 == 0):
-        #     print("State's id", current_state.id)
-        #     print("Q value of action", agent.Q_value[agent.get_Qid(current_state, action)])
+        if (j % 20 == 0):
+            print("State's id", current_state.id)
+            print("Q value of action", agent.Q_value[agent.get_Qid(current_state, action)])
 
         agent.learn(current_state, action, next_state)
 
@@ -41,6 +42,6 @@ for i in range(number_of_episodes):
             agent.reduce_exploration(i)
             break
 
-    Q_dict = dict(agent.Q_value)
-    with open('Q_value.pickle', 'wb') as handle:
-        pickle.dump(Q_dict, handle, protocol=pickle.HIGHEST_PROTOCOL)
+        Q_dict = dict(agent.Q_value)
+        with open('Q_value.pickle', 'wb') as handle:
+            pickle.dump(Q_dict, handle, protocol=pickle.HIGHEST_PROTOCOL)
