@@ -1,6 +1,6 @@
 import cv2
 import numpy as np
-
+from QLearning import *
 Megaman_img = np.array([[1, 0, 0],
                         [1, 0, 0],
                         [1, 0, 1],
@@ -50,3 +50,9 @@ def find_yPos(img, xPos):
     cv2.waitKey(0)
     return find_megaman(masked)
 
+def get_current_state(env, button_pressed):
+    screen, reward, done, info = env.step(button_pressed)
+    rgb = env.render('rgb_array')
+    find_yPos(rgb, info['xPos'])
+    current_state = State(info['progress'], info['yPos'], info['health'])
+    return current_state

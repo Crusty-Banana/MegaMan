@@ -4,31 +4,32 @@ from policy import *
 from QLearning import *
 
 env = retro.make(game='MegaMan2-Nes')
-env.reset()
 
-done = False
+agent = Agent()
+
 y_pos = 0
 
-count = 0
-while not done:
-    count += 1
-    if (count == 100000):
-        break
+number_of_steps = 1000
+number_of_episodes = 20
 
-    env.render()
+first_step = [0, 0, 0, 0, 0, 0, 1, 0]
 
-    action = env.action_space.sample()
+for i in range(number_of_episodes):
+    env.reset()
+    screen, reward, done, current_state = get_current_state(env, first_step)
 
-    action = default_policy()
-    screen, reward, done, info = env.step(action)
-    
-    rgb = env.render('rgb_array')
-    
-    new_y_pos = find_yPos(rgb, info['xPos'])
-    if (new_y_pos != -1):
-        y_pos = new_y_pos
+    for j in range(number_of_steps):
+        env.render()
 
-    print("y pos:", y_pos)
-    print("Action", action)
-    print("image ", rgb.shape, "reward ", reward, "Done?", done)
-    print("Info", info)
+        action = agent.chooseAction(current_state)
+
+        button_pressed = agent.get_button_pressed(action)
+
+        screen, reward, done, next_state = get_current_state(env, button_pressed)
+
+        agent.learn(current_state, action, next_state)
+
+        if done:
+            agent.reduce_exploration(i)
+            break
+

@@ -2,7 +2,7 @@ import numpy as np
 import pickle
 
         
-class state:
+class State:
     def __init__(self, progress, yPos, health):
         self.progress = progress
         self.yPos = yPos
@@ -32,6 +32,8 @@ class Agent:
         self.Q_value = {}
         # with open('saved_dictionary.pkl', 'rb') as f:
         #     self.Q_value = pickle.load(f)
+
+        self.shooting_clock = 0
         
     
     def chooseAction(self, state):
@@ -75,6 +77,16 @@ class Agent:
     def button_pressed(self, action):
         return [0, 0, 0, 0, 0, *self.actions_space[action]]
     
-    def reduceExploration(self, i):
+    def reduce_exploration(self, i):
             self.exploring_rate /= i + 1
+
+    def get_button_pressed(self, action):
+        button = self.button_pressed(action)
+
+        self.shooting_clock += 1
+        if (self.shooting_clock == 10):
+            self.shooting_clock = 0
+            button[0] = 1
+        
+        return button
 
