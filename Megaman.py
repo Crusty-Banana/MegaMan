@@ -11,10 +11,10 @@ env = retro.make(game='MegaMan2-Nes')
 
 agent = Agent(Q_value)
 
-number_of_steps = 1000
-number_of_episodes = 20
+number_of_steps = 100
+number_of_episodes = 100
 
-first_step = [0, 0, 0, 0, 0, 0, 1, 0]
+first_step = [0, 0, 0, 0, 0, 0, 0, 1, 0]
 
 for i in range(number_of_episodes):
     env.reset()

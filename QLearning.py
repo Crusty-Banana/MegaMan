@@ -17,13 +17,13 @@ class Agent:
         self.learning_rate = 0.5
         #gamma
         self.discounting_factor = 0.99 
-        self.action_size = 6
         self.actions_space = [[0, 0, 0],
-                        [0, 0, 1],
-                        [0, 1, 0],
-                        [0, 1, 1],
-                        [1, 0, 0],
-                        [1, 0, 1],]
+                            [0, 0, 1],
+                            [0, 1, 0],
+                            [0, 1, 1],
+                            [1, 0, 0],
+                            [1, 0, 1]]
+        self.action_size = len(self.actions_space)
         #estimated state size
         self.state_size = 10000 * 24 * 26
 
@@ -76,7 +76,7 @@ class Agent:
                                                                             - self.Q_value[self.get_Qid(current_state, action)] )
     
     def button_pressed(self, action):
-        return [0, 0, 0, 0, 0, *self.actions_space[action]]
+        return [0, 0, 0, 0, 0, 0, *self.actions_space[action]]
     
     def reduce_exploration(self, i):
             self.exploring_rate /= i + 1
@@ -86,7 +86,6 @@ class Agent:
         if (self.time_pressed >= self.pressed_frame):
             self.time_pressed = 0
             button = self.button_pressed(action)
-
             self.current_button_pressed = button
 
         self.shooting_clock += 1
