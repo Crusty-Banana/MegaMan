@@ -11,8 +11,8 @@ env = retro.make(game='MegaMan2-Nes', state="Normal.Flashman.Level1")
 
 agent = Agent(Q_value)
 
-number_of_steps = 10
-number_of_episodes = 1
+number_of_steps = 5000
+number_of_episodes = 100000
 
 first_step = [0, 0, 0, 0, 0, 0, 0, 1, 0]
 
@@ -30,10 +30,13 @@ for i in range(number_of_episodes):
 
         screen, reward, done, next_state = get_current_state(env, button_pressed)
 
+        # if (j % 20 == 0):
+        #     print("State's id", current_state.id)
+        #     print("Q value of action", agent.Q_value[agent.get_Qid(current_state, action)])
+
         agent.learn(current_state, action, next_state)
 
         current_state = next_state
-
         if done:
             agent.reduce_exploration(i)
             break

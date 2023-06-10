@@ -25,12 +25,10 @@ def find_megaman(img):
             temp_img = img[y:y+4, x:x+3]
             if (temp_img == Megaman_img1).all():
                 last_y_pos = rows - y
-                print(last_y_pos)
                 return rows - y
             
             if (temp_img == Megaman_img2).all():
                 last_y_pos = rows - y
-                print(last_y_pos)
                 return rows - y
             
     return last_y_pos
