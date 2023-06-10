@@ -1,6 +1,6 @@
 import numpy as np
 import pickle
-
+from collections import defaultdict
         
 class State:
     def __init__(self, progress, yPos, health):
@@ -10,7 +10,7 @@ class State:
         self.id = (self.progress, self.yPos // 12, self.health)
         
 class Agent:
-    def __init__(self):
+    def __init__(self, Q_value):
         #epsilon
         self.exploring_rate = 0.1
         #alpha
@@ -29,15 +29,13 @@ class Agent:
         #estimated state size
         self.state_size = 10000 * 24 * 26
 
-        self.Q_value = {}
-        # with open('saved_dictionary.pkl', 'rb') as f:
-        #     self.Q_value = pickle.load(f)
+        self.Q_value = Q_value
 
         self.shooting_clock = 0
         
     
     def chooseAction(self, state):
-        if np.random.binomial(1, self.exploring_constant) == 1:
+        if np.random.binomial(1, self.exploring_rate) == 1:
             return np.random.choice(self.action_size)
         else:
             return self.get_max_action(state)
@@ -51,28 +49,28 @@ class Agent:
 
     def get_Qid(self, state, action):
         Q_id = list(state.id) + self.actions_space[action]
-        return Q_id
+        return tuple(Q_id)
     
     def get_max_Q(self, state):
         result = -999999999
         for action in range(8):
-            result = max(result, self.Q[self.get_Qid(state, action)])
+            result = max(result, self.Q_value[self.get_Qid(state, action)])
         return result
     
     def get_max_action(self, state):
         result = -999999999
         max_action = -1
         for action in range(8):
-            if (result < self.Q[self.get_Qid(state, action)]):
-                result = self.Q[self.get_Qid(state, action)]
+            if (result < self.Q_value[self.get_Qid(state, action)]):
+                result = self.Q_value[self.get_Qid(state, action)]
                 max_action = action
         return max_action
     
     def learn(self, current_state, action, next_state):
         reward = self.Reward(current_state, next_state)
-        self.Q[self.get_Qid(current_state, action)] += self.learning_rate * ( reward 
+        self.Q_value[self.get_Qid(current_state, action)] += self.learning_rate * ( reward 
                                                                             + self.discounting_factor * self.get_max_Q(next_state) 
-                                                                            - self.Q[state, action] )
+                                                                            - self.Q_value[self.get_Qid(current_state, action)] )
     
     def button_pressed(self, action):
         return [0, 0, 0, 0, 0, *self.actions_space[action]]

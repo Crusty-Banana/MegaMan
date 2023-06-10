@@ -7,8 +7,11 @@ Megaman_img = np.array([[1, 0, 0],
                         [0, 1, 0]])
 Black =  np.array([0, 0, 0])
 
+last_y_pos = 0
+
 def find_megaman(img):
     rows, column = img.shape[:2]
+    global last_y_pos
     for y in range(rows - 3):
         for x in range(column - 2):
             flag = True
@@ -18,8 +21,10 @@ def find_megaman(img):
                         if (img[y + i, x + j] == Black).all():
                             flag = False
             if (flag == True):
+                last_y_pos = rows - y
                 return rows - y
-    return -1
+    
+    return last_y_pos
 
 def repeat_upsample(rgb_array, k=1, l=1, err=[]):
     # repeat kinda crashes if k/l are zero
@@ -47,12 +52,15 @@ def find_yPos(img, xPos):
     
     masked = get_mask(img, (248, 228, 160))
     cv2.imshow("masked", masked)
-    cv2.waitKey(0)
     return find_megaman(masked)
 
 def get_current_state(env, button_pressed):
     screen, reward, done, info = env.step(button_pressed)
+
     rgb = env.render('rgb_array')
-    find_yPos(rgb, info['xPos'])
-    current_state = State(info['progress'], info['yPos'], info['health'])
-    return current_state
+
+    yPos = find_yPos(rgb, info['xPos'])
+
+    current_state = State(info['progress'], yPos, info['health'])
+
+    return screen, reward, done, current_state
