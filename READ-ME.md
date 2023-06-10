@@ -17,11 +17,11 @@ Todo:
 
 <h2> I. Definition of a State</h2>
 
-- Health: How much health Mega Man have left $[0, 24]$
+- Health: How much health Mega Man have left $[0, 24]$  
 - Lives: How many death can Mega Man have before Game Over $[0, 3]$
 - Progress: How much progress have he make, his x coordinate on the map $[0, +\infty]$ and his y coordinate on the map.
 - Position of character on the screen.
-
+- Checkpoint
 <h2> II. Action space</h2>
 
 - Move left, right.
@@ -33,9 +33,9 @@ Todo:
 
 progress
 enemy defeated
-learning rate:
-discounting factor:
-formula:
+learning rate: $\alpha = $
+discounting factor: $\gamma = $
+formula: $Q(s, a) = \alpha[R(s, a, s') + \gamma$ $\underset{a'}{max} Q(s', a')]$
 
 <h2> IV. Initial policy </h2>
 
