@@ -38,10 +38,12 @@ for i in range(number_of_episodes):
         agent.learn(current_state, action, next_state)
 
         current_state = next_state
-        if done:
-            agent.reduce_exploration(i)
+
+        if i % 50:
+            agent.reduce_exploration(i/50)
             break
 
-        Q_dict = dict(agent.Q_value)
-        with open('Q_value.pickle', 'wb') as handle:
-            pickle.dump(Q_dict, handle, protocol=pickle.HIGHEST_PROTOCOL)
+        if (j % 1000 == 0):
+            Q_dict = dict(agent.Q_value)
+            with open('Q_value.pickle', 'wb') as handle:
+                pickle.dump(Q_dict, handle, protocol=pickle.HIGHEST_PROTOCOL)
