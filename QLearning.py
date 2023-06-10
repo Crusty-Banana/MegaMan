@@ -17,15 +17,13 @@ class Agent:
         self.learning_rate = 0.5
         #gamma
         self.discounting_factor = 0.99 
-        self.action_size = 8
+        self.action_size = 6
         self.actions_space = [[0, 0, 0],
                         [0, 0, 1],
                         [0, 1, 0],
                         [0, 1, 1],
                         [1, 0, 0],
-                        [1, 0, 1],
-                        [1, 1, 0],
-                        [1, 1, 1],]
+                        [1, 0, 1],]
         #estimated state size
         self.state_size = 10000 * 24 * 26
 
@@ -53,14 +51,14 @@ class Agent:
     
     def get_max_Q(self, state):
         result = -999999999
-        for action in range(8):
+        for action in range(self.action_size):
             result = max(result, self.Q_value[self.get_Qid(state, action)])
         return result
     
     def get_max_action(self, state):
         result = -999999999
         max_action = -1
-        for action in range(8):
+        for action in range(self.action_size):
             if (result < self.Q_value[self.get_Qid(state, action)]):
                 result = self.Q_value[self.get_Qid(state, action)]
                 max_action = action
