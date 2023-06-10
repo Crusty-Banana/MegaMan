@@ -12,7 +12,7 @@ class State:
 class Agent:
     def __init__(self, Q_value):
         #epsilon
-        self.exploring_rate = 0.1
+        self.exploring_rate = 0.5
         #alpha
         self.learning_rate = 0.5
         #gamma
