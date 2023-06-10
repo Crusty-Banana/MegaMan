@@ -9,7 +9,12 @@ env.reset()
 done = False
 y_pos = 0
 
+count = 0
 while not done:
+    count += 1
+    if (count == 100000):
+        break
+
     env.render()
 
     action = env.action_space.sample()
