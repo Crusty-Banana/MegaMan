@@ -5,6 +5,7 @@ Megaman_img = np.array([[1, 0, 0],
                         [1, 0, 1],
                         [0, 1, 0]])
 Black =  np.array([0, 0, 0])
+
 def find_megaman(img):
     rows, column = img.shape[:2]
     for y in range(rows - 3):
@@ -48,31 +49,3 @@ def find_yPos(img, xPos):
     cv2.waitKey(0)
     return find_megaman(masked)
 
-def find_contour(img, xPos):
-    img = repeat_upsample(img, 2, 2)
-    img = repeat_upsample(img, 2, 2)
-
-    #crop image
-    img = img[:,(xPos*4 - 40):(xPos*4)]
-    #megaman pos
-    mask = get_mask(img, (248, 228, 160))
-    cv2.imshow('masked', mask)
-    #blur image
-    img = cv2.GaussianBlur(img,(11,11),cv2.BORDER_DEFAULT)
-    #convert img to grey
-    img_grey = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-    #set a thresh
-    thresh = 100
-    #get threshold image
-    ret,thresh_img = cv2.threshold(img_grey, thresh, 255, cv2.THRESH_BINARY)
-    #find contours
-    contours, hierarchy = cv2.findContours(thresh_img, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
-    #create an empty image for contours
-    img_contours = np.zeros(img.shape)
-    # draw the contours on the empty image
-    cv2.drawContours(img_contours, contours, -1, (0,255,0), thickness=cv2.FILLED)
-    #save image
-    cv2.imwrite('D:/contours.png', img_contours)
-    # cv2.imshow('bruh', img_contours)
-
-    return img_contours

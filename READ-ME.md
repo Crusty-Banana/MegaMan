@@ -22,6 +22,7 @@ Todo:
 - Progress: How much progress have he make, his x coordinate on the map $[0, +\infty]$ and his y coordinate on the map.
 - Position of character on the screen.
 - Checkpoint
+- (y_pos, x_pos, checkpoint, health)
 <h2> II. Action space</h2>
 
 - Move left, right.
