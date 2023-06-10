@@ -11,8 +11,8 @@ env = retro.make(game='MegaMan2-Nes', state="Normal.Flashman.Level1")
 
 agent = Agent(Q_value)
 
-number_of_steps = 2000
-number_of_episodes = 100
+number_of_steps = 10
+number_of_episodes = 1
 
 first_step = [0, 0, 0, 0, 0, 0, 0, 1, 0]
 
@@ -33,12 +33,6 @@ for i in range(number_of_episodes):
         agent.learn(current_state, action, next_state)
 
         current_state = next_state
-
-        # rgb = env.render('rgb_array')
-        # rgb = repeat_upsample(rgb, 2, 2)
-        # rgb = repeat_upsample(rgb, 2, 2)
-        # bgr = cv2.cvtColor(rgb, cv2.COLOR_BGR2RGB)
-        # cv2.imshow("bruh", bgr)
 
         if done:
             agent.reduce_exploration(i)

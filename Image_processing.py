@@ -1,51 +1,34 @@
 import cv2
 import numpy as np
 from QLearning import *
-Megaman_img1 = np.array([[1, 0, 0],
-                        [1, 0, 0],
-                        [1, 0, 1],
-                        [0, 1, 0]])
+Black =  [0, 0, 0]
+Blue = [248, 228, 160]
+Megaman_img1 = np.uint8([[Blue, Black, Black],
+                        [Blue, Black, Black],
+                        [Blue, Black, Blue],
+                        [Black, Blue, Black]])
 
-Megaman_img2 = np.array([[0, 0, 1],
-                        [0, 0, 1],
-                        [1, 0, 1],
-                        [0, 1, 0]])
-Black =  np.array([0, 0, 0])
-Blue = np.array([248, 228, 160])
+Megaman_img2 = np.uint8([[Black, Black, Blue],
+                        [Black, Black, Blue],
+                        [Blue, Black, Blue],
+                        [Black, Blue, Black]])
+
 last_y_pos = 0
 
 def find_megaman(img):
     rows, column = img.shape[:2]
     tmp = repeat_upsample(img, 4, 4)
     cv2.imshow("masked", tmp)
-    cv2.waitKey(0)
     global last_y_pos
     for y in range(rows - 3):
         for x in range(column - 2):
-            flag = True
-            for i in range(3):
-                for j in range(2):
-                    if (Megaman_img1[i, j] == 1):
-                        if (img[y + i, x + j] == Black).all():
-                            flag = False
-                    else:
-                        if (img[y + i, x + j] == Blue).all():
-                            flag = False
-            if (flag == True):
+            temp_img = img[y:y+4, x:x+3]
+            if (temp_img == Megaman_img1).all():
                 last_y_pos = rows - y
                 print(last_y_pos)
                 return rows - y
-            ``
-            flag = True
-            for i in range(3):
-                for j in range(2):
-                    if (Megaman_img2[i, j] == 1):
-                        if (img[y + i, x + j] == Black).all():
-                            flag = False
-                    else:
-                        if (img[y + i, x + j] == Blue).all():
-                            flag = False
-            if (flag == True):
+            
+            if (temp_img == Megaman_img2).all():
                 last_y_pos = rows - y
                 print(last_y_pos)
                 return rows - y
