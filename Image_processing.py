@@ -1,29 +1,55 @@
 import cv2
 import numpy as np
 from QLearning import *
-Megaman_img = np.array([[1, 0, 0],
+Megaman_img1 = np.array([[1, 0, 0],
                         [1, 0, 0],
                         [1, 0, 1],
                         [0, 1, 0]])
-Black =  np.array([0, 0, 0])
 
+Megaman_img2 = np.array([[0, 0, 1],
+                        [0, 0, 1],
+                        [1, 0, 1],
+                        [0, 1, 0]])
+Black =  np.array([0, 0, 0])
+Blue = np.array([248, 228, 160])
 last_y_pos = 0
 
 def find_megaman(img):
     rows, column = img.shape[:2]
+    tmp = repeat_upsample(img, 4, 4)
+    cv2.imshow("masked", tmp)
+    cv2.waitKey(0)
     global last_y_pos
     for y in range(rows - 3):
         for x in range(column - 2):
             flag = True
             for i in range(3):
                 for j in range(2):
-                    if (Megaman_img[i, j] == 1):
+                    if (Megaman_img1[i, j] == 1):
                         if (img[y + i, x + j] == Black).all():
+                            flag = False
+                    else:
+                        if (img[y + i, x + j] == Blue).all():
                             flag = False
             if (flag == True):
                 last_y_pos = rows - y
+                print(last_y_pos)
                 return rows - y
-    
+            ``
+            flag = True
+            for i in range(3):
+                for j in range(2):
+                    if (Megaman_img2[i, j] == 1):
+                        if (img[y + i, x + j] == Black).all():
+                            flag = False
+                    else:
+                        if (img[y + i, x + j] == Blue).all():
+                            flag = False
+            if (flag == True):
+                last_y_pos = rows - y
+                print(last_y_pos)
+                return rows - y
+            
     return last_y_pos
 
 def repeat_upsample(rgb_array, k=1, l=1, err=[]):
@@ -48,7 +74,7 @@ def get_mask(img, color):
     return masked
 
 def find_yPos(img, xPos):
-    img = img[:,(xPos - 10):(xPos)]
+    img = img[:,(xPos - 20):(xPos + 3)]
     
     masked = get_mask(img, (248, 228, 160))
     return find_megaman(masked)
