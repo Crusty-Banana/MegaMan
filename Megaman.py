@@ -1,7 +1,7 @@
 import retro
-import random
-from helper import *
+from Image_processing import *
 from policy import *
+from QLearning import *
 
 env = retro.make(game='MegaMan2-Nes')
 env.reset()
@@ -24,7 +24,6 @@ while not done:
         y_pos = new_y_pos
 
     print("y pos:", y_pos)
-    # 14x15 grid
     print("Action", action)
     print("image ", rgb.shape, "reward ", reward, "Done?", done)
     print("Info", info)
