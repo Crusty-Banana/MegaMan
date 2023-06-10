@@ -31,11 +31,12 @@ Todo:
 
 <h2> III. Reward</h2>
 
-progress
-enemy defeated
 learning rate: $\alpha = $
 discounting factor: $\gamma = $
-formula: $Q(s, a) = \alpha[R(s, a, s') + \gamma$ $\underset{a'}{max} Q(s', a')]$
+exploring constant: $k = $
+formula: $Q(s, a) = \alpha[R(s, a, s') + \gamma$ $\underset{a'}{max} (Q(s', a') + k / N(s', a'))]$
+$R(s, a, s') = x_1(progress[s'] - progress[s]) + x_2(checkpoint[s'] - checkpoint[s]) + x_3(health[s'] - health[s])$
+$N(s, a) += 1$
 
 <h2> IV. Initial policy </h2>
 
