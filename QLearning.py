@@ -30,17 +30,22 @@ class Agent:
         self.Q_value = Q_value
 
         self.shooting_clock = 0
+
+        self.current_button_pressed = []
+        self.pressed_frame = 20
+        self.time_pressed = self.pressed_frame
         
-    
     def chooseAction(self, state):
+        action = []
         if np.random.binomial(1, self.exploring_rate) == 1:
-            return np.random.choice(self.action_size)
+            action = np.random.choice(self.action_size)
         else:
-            return self.get_max_action(state)
+            action = self.get_max_action(state)
+        return action
     
     @staticmethod
     def Reward(current_state, next_state):
-        coeff = [1, 1]
+        coeff = [10, 1]
         result = (coeff[0] * (next_state.progress - current_state.progress) 
                 + coeff[1] * (next_state.health - current_state.health)) 
         return result
@@ -77,12 +82,16 @@ class Agent:
             self.exploring_rate /= i + 1
 
     def get_button_pressed(self, action):
-        button = self.button_pressed(action)
+        self.time_pressed += 1
+        if (self.time_pressed >= self.pressed_frame):
+            self.time_pressed = 0
+            button = self.button_pressed(action)
+
+            self.current_button_pressed = button
 
         self.shooting_clock += 1
-        if (self.shooting_clock == 10):
+        if (self.shooting_clock >= 5):
             self.shooting_clock = 0
-            button[0] = 1
-        
-        return button
+            self.current_button_pressed[0] = 1
+        return self.current_button_pressed
 

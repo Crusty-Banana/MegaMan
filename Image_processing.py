@@ -51,14 +51,13 @@ def find_yPos(img, xPos):
     img = img[:,(xPos - 10):(xPos)]
     
     masked = get_mask(img, (248, 228, 160))
-    cv2.imshow("masked", masked)
     return find_megaman(masked)
 
 def get_current_state(env, button_pressed):
     screen, reward, done, info = env.step(button_pressed)
 
     rgb = env.render('rgb_array')
-
+    
     yPos = find_yPos(rgb, info['xPos'])
 
     current_state = State(info['progress'], yPos, info['health'])
