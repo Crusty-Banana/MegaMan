@@ -1,11 +1,27 @@
 import cv2
 import numpy as np
+
 Megaman_img = np.array([[1, 0, 0],
                         [1, 0, 0],
                         [1, 0, 1],
                         [0, 1, 0]])
 Black =  np.array([0, 0, 0])
 
+class state:
+    def __init__(self, xPos, yPos, health):
+        self.xPos = xPos
+        self.yPos = yPos
+        self.health = health
+
+def Reward(current_state, action, next_state):
+    coeff = [1, 1, 1]
+    result = (coeff[0] * (next_state.xPos - current_state.xPos) 
+              + coeff[1] * (next_state.yPos - current_state.yPos) 
+              + coeff[2] * (next_state.health - current_state.health)) 
+    return result
+
+def Q_value(current_state, action):
+    pass
 def find_megaman(img):
     rows, column = img.shape[:2]
     for y in range(rows - 3):
