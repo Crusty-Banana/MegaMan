@@ -31,18 +31,20 @@ class Agent:
 
         self.shooting_clock = 0
 
-        self.current_button_pressed = []
-        self.pressed_frame = 20
-        self.time_pressed = self.pressed_frame
+        self.exploration_strategy = ["Epsilon Greedy", "Optimal"]
+        self.exploration_policy = self.exploration_strategy[0]
         
     def chooseAction(self, state):
-        action = []
-        if np.random.binomial(1, self.exploring_rate) == 1:
-            action = np.random.choice(self.action_size)
-        else:
-            action = self.get_max_action(state)
-        return action
-    
+        if self.exploration_policy == "Epsilon Greedy":
+            action = []
+            if np.random.binomial(1, self.exploring_rate) == 1:
+                action = np.random.choice(self.action_size)
+            else:
+                action = self.get_max_action(state)
+            return action
+        
+        elif self.exploration_policy == "Optimal":
+            return self.get_max_action(state)
     @staticmethod
     def Reward(current_state, next_state):
         coeff = [10, 1]
@@ -82,15 +84,12 @@ class Agent:
             self.exploring_rate /= i + 1
 
     def get_button_pressed(self, action):
-        self.time_pressed += 1
-        if (self.time_pressed >= self.pressed_frame):
-            self.time_pressed = 0
-            button = self.button_pressed(action)
-            self.current_button_pressed = button
+        button = self.button_pressed(action)
 
         self.shooting_clock += 1
         if (self.shooting_clock >= 5):
             self.shooting_clock = 0
-            self.current_button_pressed[0] = 1
-        return self.current_button_pressed
+            button[0] = 1
+
+        return button
 
