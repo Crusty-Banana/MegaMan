@@ -1,30 +1,46 @@
 import retro
-import random
-from helper import *
+from Image_processing import *
 from policy import *
+from QLearning import *
 
-env = retro.make(game='MegaMan2-Nes')
-env.reset()
+Q_value = defaultdict(lambda: 0, {})
+with open('Q_value.pickle', 'rb') as handle:
+    Q_value = defaultdict(lambda: 0, pickle.load(handle))
 
-done = False
-y_pos = 0
+env = retro.make(game='MegaMan2-Nes', state="Normal.Flashman.Level1")
 
-while not done:
-    env.render()
+agent = Agent(Q_value)
 
-    action = env.action_space.sample()
+number_of_steps = 5000
+number_of_episodes = 100000
 
-    action = default_policy()
-    screen, reward, done, info = env.step(action)
-    
-    rgb = env.render('rgb_array')
-    
-    new_y_pos = find_yPos(rgb, info['xPos'])
-    if (new_y_pos != -1):
-        y_pos = new_y_pos
+first_step = [0, 0, 0, 0, 0, 0, 0, 1, 0]
 
-    print("y pos:", y_pos)
-    # 14x15 grid
-    print("Action", action)
-    print("image ", rgb.shape, "reward ", reward, "Done?", done)
-    print("Info", info)
+for i in range(number_of_episodes):
+    env.reset()
+    screen, reward, done, current_state = get_current_state(env, first_step)
+    action = agent.chooseAction(current_state)
+
+    for j in range(number_of_steps):
+        if (j % 10 == 0):
+            env.render()
+            action = agent.chooseAction(current_state)
+
+        button_pressed = agent.get_button_pressed(action)
+
+        screen, reward, done, next_state = get_current_state(env, button_pressed)
+
+        # if (j % 20 == 0):
+        #     print("State's id", current_state.id)
+        #     print("Q value of action", agent.Q_value[agent.get_Qid(current_state, action)])
+
+        agent.learn(current_state, action, next_state)
+
+        current_state = next_state
+        if done:
+            agent.reduce_exploration(i)
+            break
+
+    Q_dict = dict(agent.Q_value)
+    with open('Q_value.pickle', 'wb') as handle:
+        pickle.dump(Q_dict, handle, protocol=pickle.HIGHEST_PROTOCOL)
