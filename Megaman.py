@@ -7,9 +7,9 @@ Q_value = defaultdict(lambda: 0, {})
 with open('Q_value.pickle', 'rb') as handle:
     Q_value = defaultdict(lambda: 0, pickle.load(handle))
 
-env = retro.make(game='MegaMan2-Nes', state="Normal.Flashman.Level6")
+env = retro.make(game='MegaMan2-Nes', state="Normal.Flashman.Level7")
 
-agent = Agent(Q_value, strategy = 0, exploring_rate = 0.5, learning_rate= 0.5, discounting_factor = 0.999)
+agent = Agent(Q_value, strategy = 0, exploring_rate = 0.2, learning_rate= 0.5, discounting_factor = 0.999)
 
 number_of_steps = 500
 number_of_episodes = 300
