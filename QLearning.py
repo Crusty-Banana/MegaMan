@@ -13,7 +13,7 @@ class State:
 class Agent:
     def __init__(self, Q_value):
         #epsilon
-        self.exploring_rate = 0.2
+        self.exploring_rate = 0.5
         #alpha
         self.learning_rate = 0.5
         #gamma
@@ -24,7 +24,7 @@ class Agent:
                             [0, 1, 1],
                             [1, 0, 0],
                             [1, 0, 1]]
-        self.actions_space = ["stand still",
+        self.actions_name = ["stand still",
                               "jump",
                               "go right",
                               "jump right",
