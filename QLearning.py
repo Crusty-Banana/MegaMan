@@ -57,7 +57,7 @@ class Agent:
             return self.get_max_action(state)
     @staticmethod
     def Reward(current_state, next_state):
-        coeff = [10, 1]
+        coeff = [10, 10]
         result = (coeff[0] * (next_state.progress - current_state.progress) 
                 + coeff[1] * (next_state.health - current_state.health)) 
         return result
