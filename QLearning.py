@@ -6,8 +6,11 @@ class State:
     def __init__(self, progress, yPos, health):
         self.progress = progress
         self.yPos = yPos
-        self.health = health
-        self.health = 28
+        if (health != 0):
+            self.health = (health - 1) // 7
+            self.health = (self.health + 1) * 7
+        else:
+            self.health = 0
         self.id = (self.progress, self.yPos // 12, self.health)
         
 class Agent:
