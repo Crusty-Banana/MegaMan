@@ -58,7 +58,7 @@ class Agent:
             return self.get_max_action(state)
     @staticmethod
     def Reward(current_state, next_state):
-        coeff = [10, 10, 200]
+        coeff = [10, 10, 2000]
         result = (coeff[0] * (next_state.progress - current_state.progress) 
                 + coeff[1] * (next_state.health - current_state.health)
                 + coeff[2] * int(next_state.checkpoint != current_state.checkpoint)) 
@@ -69,13 +69,13 @@ class Agent:
         return tuple(Q_id)
     
     def get_max_Q(self, state):
-        result = -999999999
+        result = -999999999.0
         for action in range(self.action_size):
             result = max(result, self.Q_value[self.get_Qid(state, action)])
         return result
     
     def get_max_action(self, state):
-        result = -999999999
+        result = -999999999.0
         max_action = -1
         for action in range(self.action_size):
             if (result < self.Q_value[self.get_Qid(state, action)]):

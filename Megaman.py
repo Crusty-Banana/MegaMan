@@ -24,19 +24,23 @@ for i in range(number_of_episodes):
     for j in range(number_of_steps):
         if (j % 30 == 0):
             action = agent.chooseAction(current_state)
-            env.render()
+            
         if (j <= 100):
-            action = 4
+            action = 5
         button_pressed = agent.get_button_pressed(action)
 
         screen, reward, done, next_state = get_current_state(env, button_pressed)
 
-        if (j % 30 == 0):
-            print("still running", i, j)
-            print("max action:", agent.actions_name[agent.get_max_action(current_state)], agent.actions_name[action])
-            print("Cur State's id", current_state.id, current_state.checkpoint)
-            print("Next State's id", current_state.id, current_state.checkpoint)
+        if (j % 1 == 0):
+            # print("still running", i, j)
+            # print("max action:", agent.actions_name[agent.get_max_action(current_state)], agent.actions_name[action])
+            # print("Cur State's id", current_state.id, current_state.checkpoint)
+            # print("Next State's id", next_state.id, next_state.checkpoint)
+            print("max action:", agent.actions_name[agent.get_max_action(current_state)])
+            print("max  Q:", agent.Q_value[agent.get_Qid(current_state, agent.get_max_action(current_state))])
+            print("jump left Q:", agent.Q_value[agent.get_Qid(current_state, 5)])
             print("reward:", agent.Reward(current_state, next_state))
+            env.render()
 
         agent.learn(current_state, action, next_state)
 
