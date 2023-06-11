@@ -17,8 +17,9 @@ last_y_pos = 0
 
 def find_megaman(img):
     rows, column = img.shape[:2]
-    tmp = repeat_upsample(img, 4, 4)
-    cv2.imshow("masked", tmp)
+    # tmp = repeat_upsample(img, 4, 4)
+    # cv2.imshow("masked", tmp)
+    # cv2.waitKey(0)
     global last_y_pos
     for y in range(rows - 3):
         for x in range(column - 2):
@@ -52,6 +53,7 @@ def get_mask(img, color):
     upper = np.array(list(color))
     mask = cv2.inRange(img, lower, upper)
     masked = cv2.bitwise_and(img,img, mask=mask)
+    cv2.imshow("bruh", masked)
     return masked
 
 def find_yPos(img, xPos):

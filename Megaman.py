@@ -7,12 +7,12 @@ Q_value = defaultdict(lambda: 0, {})
 with open('Q_value.pickle', 'rb') as handle:
     Q_value = defaultdict(lambda: 0, pickle.load(handle))
 
-env = retro.make(game='MegaMan2-Nes', state="Normal.Flashman.Level1")
+env = retro.make(game='MegaMan2-Nes', state="Normal.Flashman.Level2")
 
-agent = Agent(Q_value)
+agent = Agent(Q_value, strategy = 0, exploring_rate = 0.5, learning_rate= 0.5, discounting_factor = 0.999)
 
-number_of_steps = 5000
-number_of_episodes = 100000
+number_of_steps = 500
+number_of_episodes = 20
 
 first_step = [0, 0, 0, 0, 0, 0, 0, 1, 0]
 
@@ -22,9 +22,12 @@ for i in range(number_of_episodes):
     action = agent.chooseAction(current_state)
 
     for j in range(number_of_steps):
-        if (j % 10 == 0):
+        
+        if (j % 30 == 0):
             env.render()
             action = agent.chooseAction(current_state)
+            print("still running", i, j)
+            print("max action:", agent.actions_name[agent.get_max_action(current_state)], agent.actions_name[action])
 
         button_pressed = agent.get_button_pressed(action)
 
@@ -32,15 +35,15 @@ for i in range(number_of_episodes):
 
         # if (j % 20 == 0):
         #     print("State's id", current_state.id)
-        #     print("Q value of action", agent.Q_value[agent.get_Qid(current_state, action)])
 
         agent.learn(current_state, action, next_state)
 
         current_state = next_state
-        if done:
-            agent.reduce_exploration(i)
-            break
 
-    Q_dict = dict(agent.Q_value)
-    with open('Q_value.pickle', 'wb') as handle:
-        pickle.dump(Q_dict, handle, protocol=pickle.HIGHEST_PROTOCOL)
+        if (j % 500 == 0):
+            Q_dict = dict(agent.Q_value)
+            with open('Q_value.pickle', 'wb') as handle:
+                pickle.dump(Q_dict, handle, protocol=pickle.HIGHEST_PROTOCOL)
+    
+    if i % 50 == 0:
+        agent.reduce_exploration(i/50)

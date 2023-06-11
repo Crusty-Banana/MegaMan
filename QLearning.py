@@ -7,22 +7,29 @@ class State:
         self.progress = progress
         self.yPos = yPos
         self.health = health
+        self.health = 28
         self.id = (self.progress, self.yPos // 12, self.health)
         
 class Agent:
-    def __init__(self, Q_value):
+    def __init__(self, Q_value, strategy, exploring_rate, learning_rate, discounting_factor):
         #epsilon
-        self.exploring_rate = 0.1
+        self.exploring_rate = exploring_rate
         #alpha
-        self.learning_rate = 0.5
+        self.learning_rate = learning_rate
         #gamma
-        self.discounting_factor = 0.99 
-        self.actions_space = [[0, 0, 0],
-                            [0, 0, 1],
-                            [0, 1, 0],
-                            [0, 1, 1],
-                            [1, 0, 0],
-                            [1, 0, 1]]
+        self.discounting_factor = discounting_factor
+        self.actions_space = [[0, 0, 1],
+                              [0, 1, 1],
+                              [0, 0, 0],
+                              [0, 1, 0],
+                              [1, 0, 0],
+                              [1, 0, 1]]
+        self.actions_name = [ "go right",
+                              "jump right",
+                              "stand still",
+                              "jump",
+                              "go left",
+                              "jump left"]
         self.action_size = len(self.actions_space)
         #estimated state size
         self.state_size = 10000 * 24 * 26
@@ -32,7 +39,7 @@ class Agent:
         self.shooting_clock = 0
 
         self.exploration_strategy = ["Epsilon Greedy", "Optimal"]
-        self.exploration_policy = self.exploration_strategy[0]
+        self.exploration_policy = self.exploration_strategy[strategy]
         
     def chooseAction(self, state):
         if self.exploration_policy == "Epsilon Greedy":
@@ -81,7 +88,7 @@ class Agent:
         return [0, 0, 0, 0, 0, 0, *self.actions_space[action]]
     
     def reduce_exploration(self, i):
-            self.exploring_rate /= i + 1
+        self.exploring_rate /= i + 1
 
     def get_button_pressed(self, action):
         button = self.button_pressed(action)
