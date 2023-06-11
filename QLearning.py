@@ -3,7 +3,7 @@ import pickle
 from collections import defaultdict
         
 class State:
-    def __init__(self, progress, yPos, health):
+    def __init__(self, progress, yPos, health, checkpoint):
         self.progress = progress
         self.yPos = yPos
         if (health != 0):
@@ -12,6 +12,7 @@ class State:
         else:
             self.health = 0
         self.id = (self.progress, self.yPos // 12, self.health)
+        self.checkpoint = checkpoint
         
 class Agent:
     def __init__(self, Q_value, strategy, exploring_rate, learning_rate, discounting_factor):
@@ -57,9 +58,10 @@ class Agent:
             return self.get_max_action(state)
     @staticmethod
     def Reward(current_state, next_state):
-        coeff = [10, 10]
+        coeff = [10, 10, 200]
         result = (coeff[0] * (next_state.progress - current_state.progress) 
-                + coeff[1] * (next_state.health - current_state.health)) 
+                + coeff[1] * (next_state.health - current_state.health)
+                + coeff[2] * int(next_state.checkpoint != current_state.checkpoint)) 
         return result
 
     def get_Qid(self, state, action):

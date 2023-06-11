@@ -9,7 +9,7 @@ with open('Q_value.pickle', 'rb') as handle:
 
 env = retro.make(game='MegaMan2-Nes', state="Normal.Flashman.Level9")
 
-agent = Agent(Q_value, strategy = 1, exploring_rate = 0.2, learning_rate= 0.5, discounting_factor = 0.999)
+agent = Agent(Q_value, strategy = 0, exploring_rate = 0.5, learning_rate= 0.5, discounting_factor = 0.999)
 
 number_of_steps = 2000
 number_of_episodes = 300
@@ -23,19 +23,20 @@ for i in range(number_of_episodes):
 
     for j in range(number_of_steps):
         if (j % 30 == 0):
-            env.render()
             action = agent.chooseAction(current_state)
-            print("still running", i, j)
-            print("max action:", agent.actions_name[agent.get_max_action(current_state)], agent.actions_name[action])
-        
-        # if (j <= 100):
-        #     action = 5
+            env.render()
+        if (j <= 100):
+            action = 4
         button_pressed = agent.get_button_pressed(action)
 
         screen, reward, done, next_state = get_current_state(env, button_pressed)
 
-        # if (j % 20 == 0):
-        #     print("State's id", current_state.id)
+        if (j % 30 == 0):
+            print("still running", i, j)
+            print("max action:", agent.actions_name[agent.get_max_action(current_state)], agent.actions_name[action])
+            print("Cur State's id", current_state.id, current_state.checkpoint)
+            print("Next State's id", current_state.id, current_state.checkpoint)
+            print("reward:", agent.Reward(current_state, next_state))
 
         agent.learn(current_state, action, next_state)
 

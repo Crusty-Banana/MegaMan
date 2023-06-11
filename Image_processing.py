@@ -69,6 +69,6 @@ def get_current_state(env, button_pressed):
     
     yPos = find_yPos(rgb, info['xPos'])
 
-    current_state = State(info['progress'], yPos, info['health'])
+    current_state = State(info['progress'], yPos, info['health'], info['checkpoint'])
 
     return screen, reward, done, current_state
