@@ -12,7 +12,7 @@ env = retro.make(game='MegaMan2-Nes', state="Normal.Flashman.Level4")
 agent = Agent(Q_value)
 
 number_of_steps = 500
-number_of_episodes = 100
+number_of_episodes = 300
 
 first_step = [0, 0, 0, 0, 0, 0, 0, 1, 0]
 
@@ -23,10 +23,11 @@ for i in range(number_of_episodes):
 
     for j in range(number_of_steps):
         
-        if (j % 10 == 0):
-            print("still running", i, j)
+        if (j % 30 == 0):
             env.render()
             action = agent.chooseAction(current_state)
+            print("still running", i, j)
+            print("max action:", agent.actions_name[agent.get_max_action(current_state)], agent.actions_name[action])
 
         button_pressed = agent.get_button_pressed(action)
 
@@ -34,8 +35,6 @@ for i in range(number_of_episodes):
 
         # if (j % 20 == 0):
         #     print("State's id", current_state.id)
-        if (j == 0):
-            print("max action:", agent.actions_name[agent.get_max_action(current_state)])
 
         agent.learn(current_state, action, next_state)
 
