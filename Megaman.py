@@ -9,7 +9,7 @@ with open('Q_value.pickle', 'rb') as handle:
 
 env = retro.make(game='MegaMan2-Nes', state="Normal.Flashman.Level1")
 
-agent = Agent(Q_value, 1)
+agent = Agent(Q_value, strategy = 0, exploring_rate = 0.1, learning_rate= 0.5, discounting_factor = 0.999)
 
 number_of_steps = 5000
 number_of_episodes = 1

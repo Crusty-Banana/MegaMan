@@ -11,23 +11,23 @@ class State:
         self.id = (self.progress, self.yPos // 12, self.health)
         
 class Agent:
-    def __init__(self, Q_value, strategy):
+    def __init__(self, Q_value, strategy, exploring_rate, learning_rate, discounting_factor):
         #epsilon
-        self.exploring_rate = 0.5
+        self.exploring_rate = exploring_rate
         #alpha
-        self.learning_rate = 0.5
+        self.learning_rate = learning_rate
         #gamma
-        self.discounting_factor = 0.999
-        self.actions_space = [[0, 0, 0],
-                            [0, 0, 1],
-                            [0, 1, 0],
-                            [0, 1, 1],
-                            [1, 0, 0],
-                            [1, 0, 1]]
-        self.actions_name = ["stand still",
+        self.discounting_factor = discounting_factor
+        self.actions_space = [[0, 1, 1],
+                              [0, 0, 0],
+                              [0, 0, 1],
+                              [0, 1, 0],
+                              [1, 0, 0],
+                              [1, 0, 1]]
+        self.actions_name = [ "jump right",
+                              "stand still",
                               "jump",
                               "go right",
-                              "jump right",
                               "go left",
                               "jump left"]
         self.action_size = len(self.actions_space)
