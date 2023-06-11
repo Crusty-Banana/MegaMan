@@ -18,16 +18,16 @@ class Agent:
         self.learning_rate = learning_rate
         #gamma
         self.discounting_factor = discounting_factor
-        self.actions_space = [[0, 1, 1],
+        self.actions_space = [[0, 0, 1],
+                              [0, 1, 1],
                               [0, 0, 0],
-                              [0, 0, 1],
                               [0, 1, 0],
                               [1, 0, 0],
                               [1, 0, 1]]
-        self.actions_name = [ "jump right",
+        self.actions_name = [ "go right",
+                              "jump right",
                               "stand still",
                               "jump",
-                              "go right",
                               "go left",
                               "jump left"]
         self.action_size = len(self.actions_space)
@@ -88,7 +88,7 @@ class Agent:
         return [0, 0, 0, 0, 0, 0, *self.actions_space[action]]
     
     def reduce_exploration(self, i):
-            self.exploring_rate /= i + 1
+        self.exploring_rate /= i + 1
 
     def get_button_pressed(self, action):
         button = self.button_pressed(action)

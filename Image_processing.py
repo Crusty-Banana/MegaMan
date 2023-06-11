@@ -53,6 +53,7 @@ def get_mask(img, color):
     upper = np.array(list(color))
     mask = cv2.inRange(img, lower, upper)
     masked = cv2.bitwise_and(img,img, mask=mask)
+    cv2.imshow("bruh", masked)
     return masked
 
 def find_yPos(img, xPos):
