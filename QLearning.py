@@ -11,7 +11,7 @@ class State:
         self.id = (self.progress, self.yPos // 12, self.health)
         
 class Agent:
-    def __init__(self, Q_value):
+    def __init__(self, Q_value, strategy):
         #epsilon
         self.exploring_rate = 0.5
         #alpha
@@ -39,7 +39,7 @@ class Agent:
         self.shooting_clock = 0
 
         self.exploration_strategy = ["Epsilon Greedy", "Optimal"]
-        self.exploration_policy = self.exploration_strategy[0]
+        self.exploration_policy = self.exploration_strategy[strategy]
         
     def chooseAction(self, state):
         if self.exploration_policy == "Epsilon Greedy":
