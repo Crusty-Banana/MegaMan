@@ -22,18 +22,19 @@ for i in range(number_of_episodes):
     action = agent.chooseAction(current_state)
 
     for j in range(number_of_steps):
-        env.render()
+        
         if (j % 10 == 0):
-            # print("still running", i, j)
-            
+            print("still running", i, j)
+            env.render()
             action = agent.chooseAction(current_state)
 
         button_pressed = agent.get_button_pressed(action)
 
         screen, reward, done, next_state = get_current_state(env, button_pressed)
 
-        if (j % 20 == 0):
-            print("State's id", current_state.id)
+        # if (j % 20 == 0):
+        #     print("State's id", current_state.id)
+        if (j == 0):
             print("max action:", agent.actions_name[agent.get_max_action(current_state)])
 
         agent.learn(current_state, action, next_state)
