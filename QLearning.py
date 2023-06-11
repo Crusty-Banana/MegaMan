@@ -24,6 +24,12 @@ class Agent:
                             [0, 1, 1],
                             [1, 0, 0],
                             [1, 0, 1]]
+        self.actions_space = ["stand still",
+                              "jump",
+                              "go right",
+                              "jump right",
+                              "go left",
+                              "jump left"]
         self.action_size = len(self.actions_space)
         #estimated state size
         self.state_size = 10000 * 24 * 26

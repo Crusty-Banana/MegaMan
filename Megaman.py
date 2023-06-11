@@ -34,7 +34,7 @@ for i in range(number_of_episodes):
 
         if (j % 20 == 0):
             print("State's id", current_state.id)
-            print("Q value of jumping right", agent.Q_value[agent.get_Qid(current_state, 3)])
+            print("max action:", agent.Q_value[agent.get_max_action(current_state)])
 
         agent.learn(current_state, action, next_state)
 
