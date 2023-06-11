@@ -24,7 +24,7 @@ for i in range(number_of_episodes):
     for j in range(number_of_steps):
         env.render()
         if (j % 10 == 0):
-            print("still running", i, j)
+            # print("still running", i, j)
             
             action = agent.chooseAction(current_state)
 
@@ -34,7 +34,7 @@ for i in range(number_of_episodes):
 
         if (j % 20 == 0):
             print("State's id", current_state.id)
-            print("Q value of action", agent.Q_value[agent.get_Qid(current_state, action)])
+            print("Q value of jumping right", agent.Q_value[agent.get_Qid(current_state, 3)])
 
         agent.learn(current_state, action, next_state)
 

@@ -7,12 +7,13 @@ class State:
         self.progress = progress
         self.yPos = yPos
         self.health = health
+        self.health = 28
         self.id = (self.progress, self.yPos // 12, self.health)
         
 class Agent:
     def __init__(self, Q_value):
         #epsilon
-        self.exploring_rate = 0.8
+        self.exploring_rate = 0.2
         #alpha
         self.learning_rate = 0.5
         #gamma
