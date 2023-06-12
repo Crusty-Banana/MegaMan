@@ -90,6 +90,7 @@ class Agent:
                                                                             - self.Q_value[self.get_Qid(current_state, action)] )
     
     def button_pressed(self, action):
+        #[shoot, dunno, dunno, up?, down?, left, right, jump]
         return [0, 0, 0, 0, 0, 0, *self.actions_space[action]]
     
     def reduce_exploration(self, i):
